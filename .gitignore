@@ -1,2 +1,135 @@
-node_modules/
+##############
+# CUSTOMIZED
+##############
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+ 
+*.serverless/*
+*.log
+*.pyc
+*.swp
 .DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.dynamodb
+.webpack
+
+# dependencies
+/node_modules
+
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+ 
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Environment Variables
+*.secret*
+*.lock
+.env
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+
+# env variables
+.env
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea #JetBrains
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Compiled Java class files
+.class
+
+# Compiled Python bytecode
+*.py[cod]
+
+# misc
+/.angular/cache
+/.sass-cache
+/connect.lock
+/coverage
+/typings
+# /libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+
+# Log files
+*.log
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Package files
+*.jar
+
+# Maven
+target/
+
+# Unit test reports
+TEST*.xml
+
+# Applications
+*.app
+*.exe
+*.war
+
+# Large media files
+# *.mp4
+# *.tiff
+# *.avi
+# *.flv
+# *.mov
+# *.wmv
