@@ -10,11 +10,11 @@
     WHERE `value1`='stuff for value1' AND `value2`='stuff for value2' LIMIT 1) 
     */
 
-const insertIntoTable = (databaseName, tableName) =>
-  `INSERT INTO \`${tableName}\` (\`username\`, \`email\`, \`isActivated\`) VALUES ('algife', 'algife@gmail.com', '1')`;
+const parseSqlColumnName = (value) => `\`${value}\``;
+const parseSqlValue = (value) =>
+  typeof value === "string" ? `\'${value}\'` : value;
 
 module.exports = {
-  getAllRecordsFromTable,
-  // createTableIfDoesNotExist,
-  insertIntoTable,
+  parseSqlValue,
+  parseSqlColumnName,
 };

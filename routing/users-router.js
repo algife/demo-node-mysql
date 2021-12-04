@@ -1,4 +1,4 @@
-const db = require("../database/db");
+const UserDAL = require("../database/dal/user-dal");
 const router = require("express").Router();
 
 // ! Router
@@ -7,26 +7,62 @@ router
   // In an enterprise-grade app It should be split in Microservices or similar
 
   // CREATE
-  .post("/", (req, res) => {})
+  .post("/", async (req, res) => {
+    const userInfo = req.body; // TODO ESCAPE It TO AVOID XSS attacks
+
+    const result = await UserDAL.createOne(userInfo);
+    return res.json(result);
+  })
 
   // READ
   .get("/", async (req, res) => {
-    const { table } = req.body; // TODO escape here with external function
-
-    const result = await db.getAll(table);
+    const result = await UserDAL.getAll();
     return res.json(result);
   })
+
+  .get("/:username", async (req, res) => {
+    const { username } = req.params; // TODO ESCAPE It TO AVOID XSS attacks
+
+    const result = await UserDAL.getOne(username);
+    return res.json(result);
+  })
+
   // UPDATE
-  .put("/", (req, res) => {
-    return res.send("Placeholder update");
+  // -- using PATCH to update certain fields but not overwrite the entire object
+  .put("/:username", async (req, res) =>
+    res.send("Use PATCH method instead to update certain fields only")
+  )
+  .patch("/:username", async (req, res) => {
+    const { username } = req.params; // TODO ESCAPE It TO AVOID XSS attacks
+    const { activate } = req.query; // TODO ESCAPE It TO AVOID XSS attacks
+    const updateInfo = req.body; // TODO ESCAPE It TO AVOID XSS attacks
+
+    if (updateInfo.username || updateInfo.isActivated)
+      res.status(400).send("Invalid request data body");
+
+    if (activate === "1") updateInfo.isActivated = 1;
+
+    const result = await UserDAL.updateOne(username, updateInfo);
+    return res.json(result);
   })
-  // UPDATE OR CREATE IF IT DOES NOT EXISTS
-  .patch("/", (req, res) => {
-    return res.send("Placeholder update");
-  })
+
   // DELETE
-  .delete("/", (req, res) => {
-    return res.send("Placeholder delete");
+  .delete("/:username", async (req, res) => {
+    try {
+      const { username } = req.params; // TODO ESCAPE It TO AVOID XSS attacks
+      const deletedUser = await UserDAL.deleteOne(username);
+
+      if (deletedUser) {
+        return res.json({ ...deletedUser, isDeleted: 1 });
+      }
+    } catch (err) {
+      return res.json({
+        error: {
+          errorCode: err.code,
+          message: err.message,
+        },
+      });
+    }
   });
 
 // --------------------------------------
